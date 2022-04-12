@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <title>ReconApp</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<h1>Rekonesans</h1>
+<h2 id="overallProgress">Ogólny postęp:&nbsp;</h2>
+<table>
+  <tbody id="topicsTable">
+    <tr>
+      <th>Temat</th>
+      <th class="centered">Wejście</th>
+      <th class="centered">Postęp</th>
+    </tr>
+  </tbody>
+</table>
+<%
+if (result) {
+  if (result.success && result.msg) {
+    __append(`
+        <script>
+            window.addEventListener('DOMContentLoaded', () => {
+                let Toast1 = Swal.mixin({
+                    toast: true,
+                    position: 'top-right',
+                    iconColor: 'white',
+                    customClass: {
+                        popup: 'colored-toast'
+                    },
+                    showConfirmButton: false,
+                    timer: 5000,
+                    timerProgressBar: true
+                })
+                Toast1.fire({
+                    icon: 'success',
+                    title: \`${result.msg}\`
+                            })
+                        })
+                        </script>
+        `)
+  } else if (result.msg) {
+    __append(`
+        <script>
+            window.addEventListener('DOMContentLoaded', () => {
+                let Toast1 = Swal.mixin({
+                    toast: true,
+                    position: 'top-right',
+                    iconColor: 'white',
+                    customClass: {
+                        popup: 'colored-toast'
+                    },
+                    showConfirmButton: false,
+                    timer: 5000,
+                    timerProgressBar: true
+                })
+                Toast1.fire({
+                    icon: 'error',
+                    title: \`${result.msg}\`
+                            })
+                        })
+                        </script>
+        `)
+  }
+} %>
+<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script>
+  window.addEventListener('DOMContentLoaded', () => {
+    let data = <% __append(JSON.stringify(data)) %>;
+    let table = document.getElementById('topicsTable');
+    let overallScore = 0;
+    // TODO: When module is finished, make it green :)
+    for (let i = 0; i < data.length; i++) {
+      overallScore += data[i].progress
+      table.innerHTML += `
+        <tr>
+          <td>${i+1}. ${data[i].topic}</td>
+          <td><a href="${(i+1).toString().padStart(2, "0")}"><div class="centered">Kliknij tutaj!</div></a></td>
+          <td class="centered">${data[i].progress}/100</td>
+        </tr>
+      `
+    }
+    document.getElementById('overallProgress').innerText += (Math.round(100*overallScore/data.length)/100).toString()+"%"
+
+  })
+  document.getElementsByClassName("enterPage")
+</script>
+</body>
+</html>

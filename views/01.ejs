@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <title>Poznanie Logiki Biznesowej Aplikacji</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<a href="../">Powrót</a>
+<h1>Poznanie Logiki Biznesowej Aplikacji</h1>
+<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed facilisis mi odio, ac venenatis felis congue quis. Etiam hendrerit sodales consectetur. Nullam sed sagittis dui. Curabitur aliquet feugiat rutrum. Mauris non ante at arcu lobortis fringilla nec eget nulla. Sed tempus ultrices velit, vitae pulvinar quam interdum in. Pellentesque vitae aliquam ligula. Nunc id mi a ligula scelerisque efficitur interdum quis est. Suspendisse a nibh sed leo consectetur scelerisque. Donec feugiat neque non purus rutrum consequat. Donec sapien metus, fringilla nec mi non, luctus finibus orci. Aliquam erat volutpat. Aenean feugiat, odio id convallis porta, enim velit egestas diam, et placerat arcu ante non tortor. Ut vitae dui a neque mattis feugiat. Nulla euismod velit quis enim convallis vestibulum.</p>
+<p>Fusce sagittis, sem ut fermentum varius, lorem lacus ultricies enim, sed vulputate est nunc ut ipsum. Nullam porta eget magna ac placerat. Morbi convallis, turpis eget varius placerat, massa enim consectetur nulla, et congue lectus felis eu risus. Maecenas aliquam, odio eget aliquam feugiat, turpis sapien blandit arcu, ut scelerisque ante diam at ligula. Nullam mollis quis enim quis dapibus. Nulla facilisi. Nunc at metus vel metus sagittis sagittis id non lorem.</p>
+<p>Duis sollicitudin, metus fermentum cursus aliquam, orci erat semper nibh, vitae posuere nulla diam id urna. Cras sollicitudin volutpat risus, eleifend consectetur tellus tincidunt nec. Praesent metus tellus, sodales vel molestie gravida, dignissim ut lectus. Suspendisse potenti. Ut vehicula, nulla at egestas egestas, justo odio tempor lorem, in pellentesque lacus massa id risus. Vestibulum gravida varius ornare. Duis placerat elit a placerat pharetra. Aliquam dignissim justo ante. Phasellus scelerisque tortor ac ligula consectetur, at lacinia enim scelerisque. Fusce sed augue eu nunc porttitor posuere quis eget lorem. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Aliquam eu lobortis libero, et suscipit felis. Suspendisse at mattis leo.</p>
+
+<%
+if (result) {
+    if (result.success && result.msg) {
+        __append(`
+        <script>
+            window.addEventListener('DOMContentLoaded', () => {
+                let Toast1 = Swal.mixin({
+                    toast: true,
+                    position: 'top-right',
+                    iconColor: 'white',
+                    customClass: {
+                        popup: 'colored-toast'
+                    },
+                    showConfirmButton: false,
+                    timer: 5000,
+                    timerProgressBar: true
+                })
+                Toast1.fire({
+                    icon: 'success',
+                    title: \`${result.msg}\`
+                            })
+                        })
+                        </script>
+        `)
+    } else if (result.msg) {
+        __append(`
+        <script>
+            window.addEventListener('DOMContentLoaded', () => {
+                let Toast1 = Swal.mixin({
+                    toast: true,
+                    position: 'top-right',
+                    iconColor: 'white',
+                    customClass: {
+                        popup: 'colored-toast'
+                    },
+                    showConfirmButton: false,
+                    timer: 5000,
+                    timerProgressBar: true
+                })
+                Toast1.fire({
+                    icon: 'error',
+                    title: \`${result.msg}\`
+                            })
+                        })
+                        </script>
+        `)
+    }
+} %>
+<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+</body>
+</html>
