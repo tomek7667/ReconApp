@@ -7,6 +7,11 @@
 <body>
 <h1>Rekonesans</h1>
 <h2 id="overallProgress">Ogólny postęp:&nbsp;</h2>
+<div class="progressSection">
+  <input type="file" class="progressRow" id="dataProgress" accept=".json">
+  <input type="submit" value="Załaduj postęp" class="progressRow progressButton" id="loadProgress">
+  <input type="submit" value="Pobierz postęp" class="progressRow progressButton" id="saveProgress">
+</div>
 <table>
   <tbody id="topicsTable">
     <tr>
@@ -82,9 +87,33 @@ if (result) {
       `
     }
     document.getElementById('overallProgress').innerText += (Math.round(100*overallScore/data.length)/100).toString()+"%"
-
+    document.getElementById('saveProgress').addEventListener('click', () => {
+      let b = document.createElement("a");
+      b.style.display = "none";
+      let a = new Blob([JSON.stringify(data)], {type: "octet/stream"});
+      let url = window.URL.createObjectURL(a);
+      b.href = url;
+      b.download = "progress.json";
+      b.click();
+      window.URL.revokeObjectURL(url);
+    })
+    document.getElementById('loadProgress').addEventListener('click', () => {
+      let fileToUpload = document.getElementById('dataProgress').files[0];
+      let reader = new FileReader();
+      reader.readAsText(fileToUpload, "UTF-8");
+      reader.onload = function (evt) {
+        fetch('/uploadProgress', {
+          method: 'POST',
+          headers: {
+            'Content-type': 'application/json'
+          },
+          body: evt.target.result
+        }).then(() => {
+          location.href = "/";
+        })
+      }
+    })
   })
-  document.getElementsByClassName("enterPage")
 </script>
 </body>
 </html>

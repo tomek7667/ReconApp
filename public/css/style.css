@@ -33,3 +33,53 @@ td, th {
 tr:nth-child(even) {
   background-color: #dddddd;
 }
+
+.progressSection {
+  height: auto;
+  width: 250px;
+  float: right;
+  border: 1px #737373 solid;
+  padding: 8px;
+  background-color: white;
+  margin-top: -80px;
+  margin-bottom: 20px;
+  border-radius: 15px;
+}
+
+.progressRow {
+  width: 100%;
+  margin: 2px;
+}
+
+.progressButton {
+  border: none;
+  background-color: #dddddd;
+  border-radius: 15px;
+  padding: 5px;
+  transition: 0.3s;
+}
+
+.progressButton:hover {
+  cursor: pointer;
+  background-color: #a8a8a8;
+}
+
+[type="file"] {
+  color: #878787;
+}
+[type="file"]::-webkit-file-upload-button {
+  background: #dddddd;
+  border: 2px solid #dddddd;
+  border-radius: 15px;
+  color: black;
+  cursor: pointer;
+  outline: none;
+  padding: 5px 15px;
+  transition: all 1s ease;
+}
+
+[type="file"]::-webkit-file-upload-button:hover {
+  background: #fff;
+  border: 2px solid #535353;
+  color: #000;
+}

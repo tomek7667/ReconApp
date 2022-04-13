@@ -8,4 +8,11 @@ router.get('/', function(req, res, next) {
   res.render('index', {result: defaultResult, data: progressData});
 });
 
+router.post('/uploadProgress',function(req, res, next) {
+  if (req.body) {
+    fs.writeFileSync("./data/progressData", JSON.stringify(req.body));
+    res.redirect('/');
+  }
+});
+
 module.exports = router;
