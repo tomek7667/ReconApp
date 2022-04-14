@@ -1,3 +1,39 @@
+.colored-toast.swal2-icon-success {
+  background-color: #a5dc86 !important;
+}
+
+.colored-toast.swal2-icon-error {
+  background-color: #f27474 !important;
+}
+
+.colored-toast.swal2-icon-warning {
+  background-color: #f8bb86 !important;
+}
+
+.colored-toast.swal2-icon-info {
+  background-color: #3fc3ee !important;
+}
+
+.colored-toast.swal2-icon-question {
+  background-color: #87adbd !important;
+}
+
+.colored-toast .swal2-title {
+  color: white;
+}
+
+.colored-toast .swal2-close {
+  color: white;
+}
+
+.colored-toast .swal2-html-container {
+  color: white;
+}
+
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
 body {
   padding: 50px;
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
@@ -82,4 +118,36 @@ tr:nth-child(even) {
   background: #fff;
   border: 2px solid #535353;
   color: #000;
+}
+
+.flagsContainer {
+
+}
+
+.submitFlag__button, .clearTask__button {
+  border: none;
+  background-color: #dddddd;
+  border-radius: 15px;
+  padding: 5px 15px;
+  transition: 0.3s;
+  margin: 5px;
+}
+
+.submitFlag__button:hover, .clearTask__button:hover {
+  cursor: pointer;
+  background-color: #a8a8a8;
+}
+
+.clearTask__button {
+  float: right;
+}
+
+.flag__input {
+  border: none;
+  padding: 5px;
+  margin: 5px;
+}
+
+.flag__input:focus {
+  outline: none;
 }

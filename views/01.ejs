@@ -8,6 +8,11 @@
 <a href="../">Powrót</a>
 <h1>Poznanie Logiki Biznesowej Aplikacji</h1>
 <p>czyli jak działa aplikacja?</p>
+<h2>Flagi</h2>
+<div class="flagsContainer">
+    <input type="text" placeholder="Tu wpisz znalezione flagi" class="flag__input" id="flag"><input type="submit" class="submitFlag__button" id="submitFlag">
+</div>
+
 <h2>Scope</h2>
 <p>
     Scope to zasięg, w jakim badamy daną stronę internetową. Mogą być to wszystkie powiązane domeny lub adresy IP z główną stroną aplikacji,
@@ -26,8 +31,9 @@
 <p>
     W programach Bug Bounty na przykład w serwisie HackerOne, firmy oferujące swój program muszą podać dokładny scope swoich usług. (Zdjęcie poniżej)
 </p>
-<img src="images/hackerone_scope_example.png">
-
+<img src="images/hackerone_scope_example.png"><br>
+<p>Twoim pierwszym zadaniem będzie zapoznanie się z <i><a href="/01/notepad">tą aplikacją</a></i> i jej logiką, przez co będziesz mógł znaleźć swój wektor ataku.</p>
+<input type="submit" class="clearTask__button" value="Kliknij by wyczyścić zadanie" id="clearTask">
 <%
 if (result) {
     if (result.success && result.msg) {
@@ -77,6 +83,95 @@ if (result) {
     }
 } %>
 <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script>
+    window.addEventListener('DOMContentLoaded', () => {
+        document.getElementById('submitFlag').addEventListener('click', () => {
+            let flagText = document.getElementById('flag').value;
+            fetch('/01/submitTask',
+                {
+                    method: "POST",
+                    headers: {
+                        "Content-type": "application/json"
+                    },
+                    body: JSON.stringify({flag: flagText})
+                }
+                ).then(r => r.json()).then(res => {
+                let result = res.result;
+                if (result.success && result.msg) {
+                    let Toast1 = Swal.mixin({
+                        toast: true,
+                        position: 'top-right',
+                        iconColor: 'white',
+                        customClass: {
+                            popup: 'colored-toast'
+                        },
+                        showConfirmButton: false,
+                        timer: 5000,
+                        timerProgressBar: true
+                    })
+                    Toast1.fire({
+                        icon: 'success',
+                        title: result.msg
+                    })
+                } else if (result.msg) {
+                    let Toast1 = Swal.mixin({
+                        toast: true,
+                        position: 'top-right',
+                        iconColor: 'white',
+                        customClass: {
+                            popup: 'colored-toast'
+                        },
+                        showConfirmButton: false,
+                        timer: 5000,
+                        timerProgressBar: true
+                    })
+                    Toast1.fire({
+                        icon: 'error',
+                        title: result.msg
+                    })
+                }
+            })
 
+        })
+        document.getElementById('clearTask').addEventListener('click', () => {
+            fetch('/01/clearTask', {method: "POST"}).then(r => r.json()).then(res => {
+                let result = res.result;
+                if (result.success && result.msg) {
+                    let Toast1 = Swal.mixin({
+                        toast: true,
+                        position: 'top-right',
+                        iconColor: 'white',
+                        customClass: {
+                            popup: 'colored-toast'
+                        },
+                        showConfirmButton: false,
+                        timer: 5000,
+                        timerProgressBar: true
+                    })
+                    Toast1.fire({
+                        icon: 'success',
+                        title: result.msg
+                    })
+                } else if (result.msg) {
+                    let Toast1 = Swal.mixin({
+                        toast: true,
+                        position: 'top-right',
+                        iconColor: 'white',
+                        customClass: {
+                            popup: 'colored-toast'
+                        },
+                        showConfirmButton: false,
+                        timer: 5000,
+                        timerProgressBar: true
+                    })
+                    Toast1.fire({
+                        icon: 'error',
+                        title: result.msg
+                    })
+                }
+            })
+        })
+    })
+</script>
 </body>
 </html>

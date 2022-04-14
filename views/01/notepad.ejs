@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <title>Poznanie Logiki Biznesowej Aplikacji - Notatnik</title>
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+<a href="/01">Powrót</a>
+<%
+if (result) {
+    if (result.success && result.msg) {
+        __append(`
+        <script>
+            window.addEventListener('DOMContentLoaded', () => {
+                let Toast1 = Swal.mixin({
+                    toast: true,
+                    position: 'top-right',
+                    iconColor: 'white',
+                    customClass: {
+                        popup: 'colored-toast'
+                    },
+                    showConfirmButton: false,
+                    timer: 5000,
+                    timerProgressBar: true
+                })
+                Toast1.fire({
+                    icon: 'success',
+                    title: \`${result.msg}\`
+                            })
+                        })
+                        </script>
+        `)
+    } else if (result.msg) {
+        __append(`
+        <script>
+            window.addEventListener('DOMContentLoaded', () => {
+                let Toast1 = Swal.mixin({
+                    toast: true,
+                    position: 'top-right',
+                    iconColor: 'white',
+                    customClass: {
+                        popup: 'colored-toast'
+                    },
+                    showConfirmButton: false,
+                    timer: 5000,
+                    timerProgressBar: true
+                })
+                Toast1.fire({
+                    icon: 'error',
+                    title: \`${result.msg}\`
+                            })
+                        })
+                        </script>
+        `)
+    }
+} %>
+<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+</body>
+</html>

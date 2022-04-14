@@ -12,6 +12,8 @@ router.post('/uploadProgress',function(req, res, next) {
   if (req.body) {
     fs.writeFileSync("./data/progressData", JSON.stringify(req.body));
     res.redirect('/');
+  } else {
+    res.send({result: {msg: "Wystąpił problem z twoim zapytaniem!", success: false}})
   }
 });
 
