@@ -1,0 +1,27 @@
+
+
+.notes__input {
+    border: none;
+    padding: 5px;
+    margin: 5px;
+    width: 100%;
+    min-height: 100px;
+}
+
+.notes__input:focus {
+    outline: none;
+}
+
+.submitNote__button {
+    border: none;
+    background-color: #dddddd;
+    border-radius: 15px;
+    padding: 5px 15px;
+    transition: 0.3s;
+    margin: 5px;
+}
+
+.submitNote__button:hover {
+    cursor: pointer;
+    background-color: #a8a8a8;
+}

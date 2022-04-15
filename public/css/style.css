@@ -120,10 +120,6 @@ tr:nth-child(even) {
   color: #000;
 }
 
-.flagsContainer {
-
-}
-
 .submitFlag__button, .clearTask__button {
   border: none;
   background-color: #dddddd;

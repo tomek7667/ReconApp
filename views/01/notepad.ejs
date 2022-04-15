@@ -3,11 +3,25 @@
 <head>
     <title>Poznanie Logiki Biznesowej Aplikacji - Notatnik</title>
     <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/01.css">
 </head>
 <body>
-<a href="/01">Powrót</a>
+<a href="/01">Powrót</a><br>
+<textarea class="notes__input" id="newNote"></textarea><br>
+<input type="submit" value="Dodaj notatkę" class="submitNote__button" id="submitButton">
+<div id="notes">
 <%
 if (result) {
+    console.log(result)
+    if (result.flag) {
+        __append(`<script>alert("${result.flag}")</script>`);
+    }
+    if (result.notes && result.notes.length > 0) {
+
+        for (let note of result.notes) {
+            __append(`<p>${note}</p>`);
+        }
+    }
     if (result.success && result.msg) {
         __append(`
         <script>
@@ -54,7 +68,56 @@ if (result) {
         `)
     }
 } %>
+</div>
 <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-
+<script>
+    document.getElementById('submitButton').addEventListener('click', () => {
+        fetch('/01/addNote',
+            {
+                method: "POST",
+                headers: {
+                    "Content-type": "application/json"
+                },
+                body: JSON.stringify({note: document.getElementById('newNote').value})
+            }
+        ).then(r => r.json()).then(res => {
+            let result = res.result;
+            if (result.reload) location.href = "/01/notepad";
+            if (result.success && result.msg) {
+                let Toast1 = Swal.mixin({
+                    toast: true,
+                    position: 'top-right',
+                    iconColor: 'white',
+                    customClass: {
+                        popup: 'colored-toast'
+                    },
+                    showConfirmButton: false,
+                    timer: 5000,
+                    timerProgressBar: true
+                })
+                Toast1.fire({
+                    icon: 'success',
+                    title: result.msg
+                })
+            } else if (result.msg) {
+                let Toast1 = Swal.mixin({
+                    toast: true,
+                    position: 'top-right',
+                    iconColor: 'white',
+                    customClass: {
+                        popup: 'colored-toast'
+                    },
+                    showConfirmButton: false,
+                    timer: 5000,
+                    timerProgressBar: true
+                })
+                Toast1.fire({
+                    icon: 'error',
+                    title: result.msg
+                })
+            }
+        })
+    })
+</script>
 </body>
 </html>
