@@ -1,6 +1,7 @@
 const express = require('express');
 const fs = require('fs');
 const rot13Cipher = require('rot13-cipher');
+let challengeHandler = require('../handlers/ChallengeHandler');
 let router = express.Router();
 let defaultResult = {msg: false, success: true};
 
@@ -18,7 +19,6 @@ router.get('/notepad', function (req, res) {
       flag = rot13Cipher(JSON.parse(fs.readFileSync("./data/01/tasks.json").toString())[1].flag);
     }
   }
-
   if (notes.length > 1 && !JSON.parse(fs.readFileSync("./data/01/tasks.json").toString())[0].finished) {
     flag = rot13Cipher(JSON.parse(fs.readFileSync("./data/01/tasks.json").toString())[0].flag);
   }
@@ -49,54 +49,14 @@ router.post('/clearTask', function (req, res) {
       // Clear progress of a topic
       fs.writeFileSync('./data/progressData', JSON.stringify(progressData));
       // Clear submitted flags
-      clearTasks();
+      challengeHandler.clearTasks('01');
       res.send({result: {msg: "Pomyślnie wyczyszczono postęp modułu 01!", success: true}})
     } catch (e) {
       res.send({result: {msg: "Wystąpił problem z czyszczeniem postępu modułu 01!", success: false}})
     }
 })
 
-router.post('/submitTask', function (req, res) {
-  if (req.body && req.body.flag) {
-    let tasks = JSON.parse(fs.readFileSync('./data/01/tasks.json').toString());
-    let result = submitFlag(req.body.flag, tasks);
-    res.send({result: result});
-  } else {
-    res.send({result: {msg: "Wystąpił problem z przetworzeniem twojego zapytania!", success: false}})
-  }
-})
+challengeHandler.taskHandlerRouter(router, '01')
 
-let clearTasks = () => {
-  let tasks = JSON.parse(fs.readFileSync('./data/01/tasks.json').toString());
-  for (let task of tasks) {
-    task.finished = false;
-  }
-  fs.writeFileSync('./data/01/tasks.json', JSON.stringify(tasks));
-}
-
-let submitFlag = (flag, tasks) => {
-  let result = {msg: "Flaga nieprawidłowa!", success: false};
-  let finishedTasks = 0;
-  for (let task of tasks) {
-    if (task.flag === rot13Cipher(flag)) {
-      if (task.finished) {
-        result.msg = "Już zdobyłeś tą flagę!";
-      } else {
-        result.msg = `Gratulujemy! Rozwiązałeś zadanie ${task.taskName}`;
-        result.success = true;
-        task.finished = true;
-      }
-    }
-    if (task.finished) finishedTasks++;
-  }
-  let progress = Math.floor(100*finishedTasks / tasks.length);
-  if (result.success) {
-    fs.writeFileSync('./data/01/tasks.json', JSON.stringify(tasks));
-    let progressData = JSON.parse(fs.readFileSync('./data/progressData').toString());
-    progressData[0].progress = progress;
-    fs.writeFileSync('./data/progressData', JSON.stringify(progressData));
-  }
-  return result;
-}
 
 module.exports = router;

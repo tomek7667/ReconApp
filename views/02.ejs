@@ -1,38 +1,29 @@
 <!DOCTYPE html>
 <html lang="pl">
 <head>
-    <title>Poznanie Logiki Biznesowej Aplikacji</title>
+    <title>Architektura Aplikacji webowej</title>
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
 <a href="../">Powrót</a>
-<h1>Poznanie Logiki Biznesowej Aplikacji</h1>
-<p>czyli pierwsze rozpoznanie</p>
+<h1>Architektura Aplikacji webowej</h1>
+<p>czyli jak zaprojektowana jest aplikacja?</p>
 <h2>Flagi</h2>
 <div class="flagsContainer">
     <input type="text" placeholder="Tu wpisz znalezione flagi" class="flag__input" id="flag"><input type="submit" class="submitFlag__button" id="submitFlag">
 </div>
+<h2>
+    Każda aplikacja internetowa posiada <b>front-end</b> oraz <b>back-end</b>.
+</h2>
+<p>
+    <b>Front-end</b> jest znany również jako <b>strona klienta</b> aplikacji, ponieważ określa wszystko z czym użytkownik strony ma do czynienia.
+    Główną rolą front-end'u jest pobieranie danych od użytkowników. Front-end jest operowany przez HTML, CSS oraz JavaScript.
+</p>
+<p>
+    <b>Back-end</b> również znany jako <b>strona serwerowa</b> aplikacji, odpowiada za logikę aplikacji, użytkownik nie ma dostępu
+    do tej części aplikacji webowej.
+</p>
 
-<h2>Scope</h2>
-<p>
-    Scope to zasięg, w jakim badamy daną stronę internetową. Mogą być to wszystkie powiązane domeny lub adresy IP z główną stroną aplikacji,
-    jednak o obszerności scope'u decyduje firma zlecająca. Istotnym jest zapoznanie się ze scope'em przed przystąpieniem do testowania,
-    bo może okazać się, że zlecający nie uwzględnia w ofercie/umowie danych domen.
-</p>
-<h2>Rozeznanie</h2>
-<p>
-    Przed jakimikolwiek testami aplikacji, jeśli mamy możliwość, warto spotkać się z kimś, kto z daną aplikacją miał już sporo do czynienia.
-    Kluczem do pełnego poznania działania aplikacji, jest również zapoznanie się z dokumentacją, która zawiera niezbędne informacje dotyczące logiki aplikacji.
-</p>
-<p>
-    Zawsze gdy istnieje możliwość rozwiania jakiejkolwiek wątpliwości dot. aplikacji poprzez np.: porozmawianie z kimś z zespołu
-    developerów, warto zapytać - więcej informacji, większa szansa na znalezienie podatności.
-</p>
-<p>
-    W programach Bug Bounty na przykład w serwisie HackerOne, firmy oferujące swój program muszą podać dokładny scope swoich usług. (Zdjęcie poniżej)
-</p>
-<img src="images/hackerone_scope_example.png"><br>
-<p>Twoim pierwszym zadaniem będzie zapoznanie się z <i><a href="/01/notepad">tą aplikacją</a></i> i jej logiką, przez co będziesz mógł znaleźć swój wektor ataku.</p>
 <input type="submit" class="clearTask__button" value="Kliknij by wyczyścić zadanie" id="clearTask">
 <%
 if (result) {
@@ -87,7 +78,7 @@ if (result) {
     window.addEventListener('DOMContentLoaded', () => {
         document.getElementById('submitFlag').addEventListener('click', () => {
             let flagText = document.getElementById('flag').value;
-            fetch('/01/submitTask',
+            fetch('/02/submitTask',
                 {
                     method: "POST",
                     headers: {
@@ -134,7 +125,7 @@ if (result) {
 
         })
         document.getElementById('clearTask').addEventListener('click', () => {
-            fetch('/01/clearTask', {method: "POST"}).then(r => r.json()).then(res => {
+            fetch('/02/clearTask', {method: "POST"}).then(r => r.json()).then(res => {
                 let result = res.result;
                 if (result.success && result.msg) {
                     let Toast1 = Swal.mixin({
