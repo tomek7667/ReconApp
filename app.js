@@ -5,6 +5,7 @@ let cookieParser = require('cookie-parser');
 let logger = require('morgan');
 let indexRouter = require('./routes/index');
 let r01 = require('./routes/01');
+let r02 = require('./routes/02');
 let fs = require('fs');
 const app = express();
 
@@ -19,7 +20,9 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
+// Modules routers:
 app.use('/01', r01);
+app.use('/02', r02);
 
 app.listen(port, '0.0.0.0', () => {
   console.log(`Node server running on ${port}`);

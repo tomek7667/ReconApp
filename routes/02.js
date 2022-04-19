@@ -9,5 +9,6 @@ router.get('/', function(req, res, next) {
   res.render('02', {result: defaultResult});
 });
 
+challengeHandler.taskHandlerRouter(router, '02')
 
 module.exports = router;

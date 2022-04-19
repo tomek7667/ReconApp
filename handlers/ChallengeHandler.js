@@ -51,9 +51,13 @@ let taskHandlerRouter = (router, moduleNumber) => {
     })
     router.post('/submitTask', function (req, res) {
         if (req.body && req.body.flag) {
-            let tasks = JSON.parse(fs.readFileSync(`./data/${moduleNumber}/tasks.json`).toString());
-            let result = submitFlag(req.body.flag, tasks, moduleNumber);
-            res.send({result: result});
+            try {
+                let tasks = JSON.parse(fs.readFileSync(`./data/${moduleNumber}/tasks.json`).toString());
+                let result = submitFlag(req.body.flag, tasks, moduleNumber);
+                res.send({result: result});
+            } catch (e) {
+                res.send({result: {msg: `Wystąpił problem z wysyłaniem flagi modułu ${moduleNumber}!`, success: false}})
+            }
         } else {
             res.send({result: {msg: "Wystąpił problem z przetworzeniem twojego zapytania!", success: false}})
         }
