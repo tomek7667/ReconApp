@@ -147,3 +147,7 @@ tr:nth-child(even) {
 .flag__input:focus {
   outline: none;
 }
+
+img {
+  max-width: 100%;
+}
